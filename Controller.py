@@ -82,10 +82,10 @@ class Controller:
         
         dif, max_dif_per =self.ks.evaluarKS(data) # Evaluate
         
-        self.fr.generateLbl(f"Diferencia Máxima: {dif}", 390, 471)
+        self.fr.generateLbl(f"Diferencia Máxima: {dif:.5f}", 390, 471)
         self.fr.generateLbl(f"Diferencia Máxima Permitida: {max_dif_per}", 390, 509)
 
-        # self.drawKSFigure(data) #Finally paint the graphic
+        self.drawKSFigure(data) #Finally paint the graphic
     
     def Chi2Test(self):
         data =self.read_data_from_file(self.fr.getFilePath())
@@ -109,10 +109,10 @@ class Controller:
         #Make the test
         statistics, counts, value,n, Oi,Ei=self.poker.evaluate(data)
         #Shows information
-        # self.fr.generateLbl(f"Number of samples: {n}")
-        # self.fr.generateLbl(f"Obtained Value: {value}")
-        # self.fr.generateLbl(f"Poker counts: {counts}")
-        # self.fr.generateLbl(f"PokerValue Associated: {statistics}")
+        self.fr.generateLbl(f"Number of samples: {n}")
+        self.fr.generateLbl(f"Obtained Value: {value}")
+        self.fr.generateLbl(f"Poker counts: {counts}")
+        self.fr.generateLbl(f"PokerValue Associated: {statistics}")
         self.drawPokerFigure(data,Oi,Ei) #Finally paint the graphic
 
     def drawMeanFigure(self,li,ls,m, name1, name2, name3):
