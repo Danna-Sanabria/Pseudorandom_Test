@@ -6,6 +6,7 @@ import scipy.stats as st
 class KSTest:
     def __init__(self, acceptance_lvl=0.05):
         self.acceptance_lvl = acceptance_lvl
+        self.intervalos = [(0.0, 0.1), (0.1, 0.2), (0.2, 0.3), (0.3, 0.4),(0.4, 0.5), (0.5, 0.6), (0.6, 0.7), (0.7, 0.8), (0.8, 0.9), (0.9, 1.0)]
         #KS table of probabilities
         self.kstable = np.array([
         [0.20,0.10,0.05,0.02,0.01,0.005,0.002,0.001],
@@ -59,21 +60,21 @@ class KSTest:
         [0.15139, 0.17301, 0.19221, 0.21493, 0.23059, 0.24523, 0.26328, 0.27611],
         [0.14987, 0.17128, 0.19028, 0.21281, 0.22832, 0.24281, 0.26069, 0.27339],
         [0.14840, 0.16959, 0.18841, 0.21068, 0.22604, 0.24039, 0.25809, 0.27067]
-        ]),
-        self.intervalos = [(0.0, 0.1), (0.1, 0.2), (0.2, 0.3), (0.3, 0.4),
-                        (0.4, 0.5), (0.5, 0.6), (0.6, 0.7), (0.7, 0.8),
-                        (0.8, 0.9), (0.9, 1.0)]
+        ])
 
     def evaluarKS(self, data):
         self.datos = data
         self.total_datos = len(data)
         self.frecuencia_obtenida = self.calcular_frecuencia_obtenida()
         self.frecuencia_obtenida_acumulada = self.calcular_frecuencia_obtenida_acumulada()
-        self.calcular_frecuencia_esperada_acumulada = self.calcular_frecuencia_esperada_acumulada()
-        self.calcular_probabilidad_esperada = self.calcular_probabilidad_esperada()
-        # estadistico_ks = max(diferencia_absoluta)
-        # print(estadistico_ks)
-        # return estadistico_ks
+        # self.calcular_frecuencia_esperada_acumulada = self.calcular_frecuencia_esperada_acumulada()
+        # self.calcular_probabilidad_esperada = self.calcular_probabilidad_esperada()
+        # self.calcular_probabilidad_obtenida = self.calcular_probabilidad_obtenida()
+        self.max_diferencia = self.calcular_diferencia_absoluta()
+        self.max_dif_permitida = self.findKSValue()
+        print(self.findKSValue())
+    
+        return self.max_diferencia, self.max_dif_permitida
 
     def calcular_frecuencia_obtenida(self):
         frecuencia_absoluta = [0] * len(self.intervalos)
@@ -99,8 +100,6 @@ class KSTest:
         probabilidad_obtenida = [frecuencia / total_datos_obtenidos for frecuencia in self.frecuencia_obtenida_acumulada]
         print("Probabilidad Obtenida: ", [f"{prob:.5f}" for prob in probabilidad_obtenida])
         return probabilidad_obtenida
-
-        return probabilidad_esperada
 
     def calcular_frecuencia_esperada_acumulada(self):
         longitud_arreglo = len(self.datos)
@@ -137,7 +136,7 @@ class KSTest:
         return acumulados_intervalos
     
     def calcular_probabilidad_esperada(self):
-        frecuencia_acumulada = self.calcular_frecuencia_esperada_acumulada
+        frecuencia_acumulada = self.calcular_frecuencia_esperada_acumulada()
         longitud_arreglo = len(self.datos)
         probabilidad_esperada = []
 
@@ -148,28 +147,20 @@ class KSTest:
         print("\nProbabilidad esperada para cada intervalo:")
         for i, probabilidad in enumerate(probabilidad_esperada):
             print(f"Intervalo {i+1}: {probabilidad:.2f}")
+        return probabilidad_esperada
 
-    # def calcular_probabilidad_esperada(self):
-    #     total_datos = sum(len(fila) for fila in self.datos)
-    #     frecuencia_esperada_acumulada = self.calcular_frecuencia_esperada_acumulada()
-    #     probabilidad_esperada = []
-
-    #     for frecuencia in frecuencia_esperada_acumulada:
-    #         probabilidad = frecuencia / total_datos
-    #         probabilidad_esperada.append(probabilidad)
-
-    #     print("Probabilida esperada", probabilidad_esperada)
-    #     return probabilidad_esperada
-
-
-
-
-
-
-
-
-
-
+    def calcular_diferencia_absoluta(self):
+        probabilidad_esperada = self.calcular_probabilidad_esperada()
+        probabilidad_obtenida = self.calcular_probabilidad_obtenida()
+        
+        diferencia_absoluta = [abs(esperada - obtenida) for esperada, obtenida in zip(probabilidad_esperada, probabilidad_obtenida)]
+        
+        print("\nDiferencia absoluta para cada intervalo:")
+        for i, diferencia in enumerate(diferencia_absoluta):
+            print(f"Intervalo {i+1}: {diferencia:.5f}")
+        max_diferencia = max(diferencia_absoluta)
+        print(f"\nValor máximo de diferencia absoluta: {max_diferencia:.5f}")
+        return max_diferencia
 
 
 
@@ -191,8 +182,9 @@ class KSTest:
     
     """"Method to find the KS value associated to the number of samples and acceptance_lvl"""
     def findKSValue(self):
-        if self.n<=50:
-            return self.kstable[self.n,2] #returns the KS value if n is lower or equal than 50
+        n = len(self.datos)
+        if n<=50:
+            return self.kstable[n,2] #returns the KS value if n is lower or equal than 50
         else:
             return self.calculateValueKS() #returns the calculated KS value for n>50
         

@@ -79,18 +79,11 @@ class Controller:
         data =self.read_data_from_file(self.fr.getFilePath())
         self.fr.destroyAlllbls() # Destroy previous labels
         value = self.ks.evaluarKS(data)
-        # # self.fr.generateLbl("KS TEST")
-        # #Make the test
-        # # dif, ksvalue=self.ks.evaluate(data) # Evaluate
-        # results = KSTest.calculate_differences(self, data)
-        # print( results['max_diff_normal'])
-        # print( results['diff_normal'])
-        # print( results['max_diff_poisson'])
-        # #Shows information
-        # # self.fr.generateLbl(f"Number of samples: {n}")
-        # # self.fr.generateLbl(f"Passed test: {valid}")
-        # # self.fr.generateLbl("Max Difference: %.5f %%" % dif, 390, 471)
-        # # self.fr.generateLbl(f"KSValue associated: {ksvalue}", 390, 509)
+        
+        dif, max_dif_per =self.ks.evaluarKS(data) # Evaluate
+        
+        self.fr.generateLbl(f"Diferencia Máxima: {dif}", 390, 471)
+        self.fr.generateLbl(f"Diferencia Máxima Permitida: {max_dif_per}", 390, 509)
 
         # self.drawKSFigure(data) #Finally paint the graphic
     
