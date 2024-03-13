@@ -59,8 +59,120 @@ class KSTest:
         [0.15139, 0.17301, 0.19221, 0.21493, 0.23059, 0.24523, 0.26328, 0.27611],
         [0.14987, 0.17128, 0.19028, 0.21281, 0.22832, 0.24281, 0.26069, 0.27339],
         [0.14840, 0.16959, 0.18841, 0.21068, 0.22604, 0.24039, 0.25809, 0.27067]
-        ])
+        ]),
+        self.intervalos = [(0.0, 0.1), (0.1, 0.2), (0.2, 0.3), (0.3, 0.4),
+                        (0.4, 0.5), (0.5, 0.6), (0.6, 0.7), (0.7, 0.8),
+                        (0.8, 0.9), (0.9, 1.0)]
+
+    def evaluarKS(self, data):
+        self.datos = data
+        self.total_datos = len(data)
+        self.frecuencia_obtenida = self.calcular_frecuencia_obtenida()
+        self.frecuencia_obtenida_acumulada = self.calcular_frecuencia_obtenida_acumulada()
+        self.calcular_frecuencia_esperada_acumulada = self.calcular_frecuencia_esperada_acumulada()
+        self.calcular_probabilidad_esperada = self.calcular_probabilidad_esperada()
+        # estadistico_ks = max(diferencia_absoluta)
+        # print(estadistico_ks)
+        # return estadistico_ks
+
+    def calcular_frecuencia_obtenida(self):
+        frecuencia_absoluta = [0] * len(self.intervalos)
+        for dato in self.datos:
+            for i, (inicio, fin) in enumerate(self.intervalos):
+                if inicio <= dato < fin:
+                    frecuencia_absoluta[i] += 1
+                    break
+        print("Frecuencia obtenida: ", frecuencia_absoluta )            
+        return frecuencia_absoluta
+
+    def calcular_frecuencia_obtenida_acumulada(self):
+        frecuencia_obtenida_acumulada = []
+        acumulada = 0
+        for frecuencia in self.frecuencia_obtenida:
+            acumulada += frecuencia
+            frecuencia_obtenida_acumulada.append(acumulada)
+        print("Frecuencia obtenida acumulada: ", frecuencia_obtenida_acumulada)
+        return frecuencia_obtenida_acumulada
+
+    def calcular_probabilidad_obtenida(self):
+        total_datos_obtenidos = self.frecuencia_obtenida_acumulada[-1]  # El último valor es el total de datos
+        probabilidad_obtenida = [frecuencia / total_datos_obtenidos for frecuencia in self.frecuencia_obtenida_acumulada]
+        print("Probabilidad Obtenida: ", [f"{prob:.5f}" for prob in probabilidad_obtenida])
+        return probabilidad_obtenida
+
+        return probabilidad_esperada
+
+    def calcular_frecuencia_esperada_acumulada(self):
+        longitud_arreglo = len(self.datos)
+        tamano_intervalo = longitud_arreglo // 10  # Dividir la longitud del arreglo en 10 intervalos
+
+        intervalos = []
+        inicio = 0
+        acumulados_intervalos = []
+
+        for i in range(10):
+            fin = min(inicio + tamano_intervalo, longitud_arreglo)
+            intervalo_actual = self.datos[inicio:fin]
+            intervalos.append(intervalo_actual)
+            acumulado_intervalo = len(intervalo_actual)  # Calcular la cantidad de datos en el intervalo actual
+            if acumulados_intervalos:
+                acumulado_intervalo += acumulados_intervalos[-1]  # Agregar al acumulado el último valor acumulado
+            acumulados_intervalos.append(acumulado_intervalo)
+            inicio = fin
+
+        # Manejar el caso en el que la longitud del arreglo no sea divisible por 10
+        if inicio < longitud_arreglo:
+            intervalo_final = self.datos[inicio:]
+            intervalos.append(intervalo_final)
+            acumulado_intervalo = len(intervalo_final)
+            if acumulados_intervalos:
+                acumulado_intervalo += acumulados_intervalos[-1]
+            acumulados_intervalos.append(acumulado_intervalo)
+
+
+        
+        print("\nAcumulado de cada intervalo:")
+        for i, acumulado in enumerate(acumulados_intervalos):
+            print(f"Intervalo {i+1}: {acumulado}")
+        return acumulados_intervalos
     
+    def calcular_probabilidad_esperada(self):
+        frecuencia_acumulada = self.calcular_frecuencia_esperada_acumulada
+        longitud_arreglo = len(self.datos)
+        probabilidad_esperada = []
+
+        for acumulado in frecuencia_acumulada:
+            probabilidad = acumulado / longitud_arreglo
+            probabilidad_esperada.append(probabilidad)
+
+        print("\nProbabilidad esperada para cada intervalo:")
+        for i, probabilidad in enumerate(probabilidad_esperada):
+            print(f"Intervalo {i+1}: {probabilidad:.2f}")
+
+    # def calcular_probabilidad_esperada(self):
+    #     total_datos = sum(len(fila) for fila in self.datos)
+    #     frecuencia_esperada_acumulada = self.calcular_frecuencia_esperada_acumulada()
+    #     probabilidad_esperada = []
+
+    #     for frecuencia in frecuencia_esperada_acumulada:
+    #         probabilidad = frecuencia / total_datos
+    #         probabilidad_esperada.append(probabilidad)
+
+    #     print("Probabilida esperada", probabilidad_esperada)
+    #     return probabilidad_esperada
+
+
+
+
+
+
+
+
+
+
+
+
+
     """Main method to make test"""
     def evaluate(self, data):
         # data = np.sort(data)
@@ -108,34 +220,3 @@ class KSTest:
         return np.mean(data),np.std(data)
     
 
-    def calculate_differences(self, data):
-        mu = 0.5
-        sigma = 1
-        # Calculate EDF for the given data
-        edf = np.arange(1, len(data) + 1) / len(data)
-
-        # Calculate CDF for a normal distribution
-        normal_cdf = st.norm.cdf(data, mu, sigma)
-
-        # Calculate CDF for a Poisson distribution
-        poisson_cdf = 1 - st.poisson.cdf(mu, data)
-
-        # Calculate absolute differences
-        diff_normal = np.abs(normal_cdf - edf)
-        diff_poisson = np.abs(poisson_cdf - edf)
-
-        # Get maximum differences
-        max_diff_normal = max(diff_normal)
-        max_diff_poisson = max(diff_poisson)
-
-        # Calculate critical value at 95% confidence interval
-        D_critical = 1.36 * np.sqrt(2 / len(data))
-
-        return {
-            
-            'diff_normal': diff_normal,
-            'diff_poisson': diff_poisson,
-            'max_diff_normal': max_diff_normal,
-            'max_diff_poisson': max_diff_poisson,
-            'D_critical': D_critical
-        }
