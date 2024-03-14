@@ -107,13 +107,22 @@ class Controller:
         self.fr.destroyAlllbls() # Destroy previous labels
         # self.fr.generateLbl("POKER TEST")
         #Make the test
-        statistics, counts, value,n, Oi,Ei=self.poker.evaluate(data)
+        #chi2.ppf(0.05, 6), counts, np.sum(finals), n, self.Oi, Ei
+
+        statistics, counts, value,n, Oi,Ei = self.poker.evaluate(data)
         #Shows information
-        self.fr.generateLbl(f"Number of samples: {n}", 390, 471)
-        self.fr.generateLbl(f"Obtained Value: {value}", 390, 509)
-        self.fr.generateLbl(f"Poker counts: {counts}", 390, 547)
-        self.fr.generateLbl(f"PokerValue Associated: {statistics}", 390, 585)
-        # self.drawPokerFigure(data,Oi,Ei) #Finally paint the graphic
+        self.fr.generateLbl(f"Número de muestras: {n}", 290, 463)
+        self.fr.generateLbl(f"Sumatoria: {value}", 290, 491)
+        self.fr.generateLbl(f"Poker : {counts}", 290, 519)
+        self.fr.generateLbl(f"Máximo Error Permitido: {statistics}", 290, 547)
+        self.fr.generateLbl(f"D: Todos Diferentes", 811, 713)
+        self.fr.generateLbl(f"O: Un par", 811, 733)
+        self.fr.generateLbl(f"T: Dos pares", 811, 753)
+        self.fr.generateLbl(f"K: Tercia ", 811, 773)
+        self.fr.generateLbl(f"F: Tercia & par", 811, 793)
+        self.fr.generateLbl(f"P: Cuatro cartas del mismo valor", 811, 813)
+        self.fr.generateLbl(f"Q: Cinco cartas del mismo valor", 811, 833)
+        self.drawPokerFigure(data,Oi,Ei) #Finally paint the graphic
 
     def drawMeanFigure(self,li,ls,m, name1, name2, name3):
         self.fig = plt.figure(figsize=(7, 3), dpi=120)
@@ -205,7 +214,7 @@ class Controller:
         self.canvas.get_tk_widget().pack_forget()
         self.canvas = FigureCanvasTkAgg(self.fig, master= self.fr.mywindow)
         self.canvas.draw()
-        self.canvas.get_tk_widget().pack(side=tk.RIGHT)
+        self.canvas.get_tk_widget().pack(side=tk.BOTTOM)
         # Update the window with the new figure
         self.fr.mywindow.update()
 

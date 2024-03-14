@@ -110,7 +110,7 @@ class Frame:
 
     #Allows create a new label to show information
     def generateLbl(self, labelname, x, y, extraHeight=0):
-        new_lbl = tk.Label(text=self.cutString(labelname), bg="#FFEEDD", font=("Georgia", 12))
+        new_lbl = tk.Label(text=self.cutString(labelname), font=("Georgia", 13))
         new_lbl.place(x=x, y=y)
         self.labels.append(new_lbl)
         self.y1 = y + 100 + extraHeight
