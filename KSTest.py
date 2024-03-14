@@ -64,6 +64,7 @@ class KSTest:
 
     def evaluarKS(self, data):
         self.datos = data
+        self.n = len(self.datos)
         self.total_datos = len(data)
         self.frecuencia_obtenida = self.calcular_frecuencia_obtenida()
         self.frecuencia_obtenida_acumulada = self.calcular_frecuencia_obtenida_acumulada()
@@ -100,14 +101,17 @@ class KSTest:
 
     def calcular_frecuencia_esperada_acumulada(self):
         longitud_arreglo = len(self.datos)
-        tamano_intervalo = longitud_arreglo // 10  # Dividir la longitud del arreglo en 10 intervalos
+        tamano_intervalo, residuo = divmod(longitud_arreglo, 10)  # Dividir la longitud del arreglo en 10 intervalos
 
         intervalos = []
         inicio = 0
         acumulados_intervalos = []
 
         for i in range(10):
-            fin = min(inicio + tamano_intervalo, longitud_arreglo)
+            if i < residuo:
+                fin = inicio + tamano_intervalo + 1
+            else:
+                fin = inicio + tamano_intervalo
             intervalo_actual = self.datos[inicio:fin]
             intervalos.append(intervalo_actual)
             acumulado_intervalo = len(intervalo_actual)  # Calcular la cantidad de datos en el intervalo actual
@@ -116,17 +120,6 @@ class KSTest:
             acumulados_intervalos.append(acumulado_intervalo)
             inicio = fin
 
-        # Manejar el caso en el que la longitud del arreglo no sea divisible por 10
-        if inicio < longitud_arreglo:
-            intervalo_final = self.datos[inicio:]
-            intervalos.append(intervalo_final)
-            acumulado_intervalo = len(intervalo_final)
-            if acumulados_intervalos:
-                acumulado_intervalo += acumulados_intervalos[-1]
-            acumulados_intervalos.append(acumulado_intervalo)
-
-
-        
         print("\nAcumulado de cada intervalo:")
         for i, acumulado in enumerate(acumulados_intervalos):
             print(f"Intervalo {i+1}: {acumulado}")
@@ -136,11 +129,13 @@ class KSTest:
         frecuencia_acumulada = self.calcular_frecuencia_esperada_acumulada()
         longitud_arreglo = len(self.datos)
         probabilidad_esperada = []
-
+        
         for acumulado in frecuencia_acumulada:
-            probabilidad = acumulado / longitud_arreglo
-            probabilidad_esperada.append(probabilidad)
+            if(len(probabilidad_esperada) <= 10):
+                probabilidad = acumulado / longitud_arreglo
+                probabilidad_esperada.append(probabilidad)
 
+        print("LONGITUDD",len(probabilidad_esperada) )
         print("\nProbabilidad esperada para cada intervalo:")
         for i, probabilidad in enumerate(probabilidad_esperada):
             print(f"Intervalo {i+1}: {probabilidad:.2f}")

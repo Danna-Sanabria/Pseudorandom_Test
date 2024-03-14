@@ -187,7 +187,7 @@ class Controller:
 
     def drawPokerFigure(self,data, Oi,Ei):
         self.fig.clear()
-        self.fig = plt.figure(figsize=(7, 4), dpi=100)
+        self.fig = plt.figure(figsize=(5, 3), dpi=100)
         ax = self.fig.add_subplot(111)
         tags = ["D","0","T","K","F","P","Q"] # tags for every hand of poker
         ax.set_title("Poker Test")
