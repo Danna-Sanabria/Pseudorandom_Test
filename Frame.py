@@ -77,7 +77,7 @@ class Frame:
         file = filedialog.askopenfilename()
         self.selected_file = file
         self.path_lbl = tk.Label(text = file, bg = "#FFEEDD", fg="black" , font = ("Georgia", 9), )
-        self.path_lbl.place(x = 325, y = 205)
+        self.path_lbl.place(x = 325, y = 210)
 
     #get the selected file path
     def getFilePath(self):

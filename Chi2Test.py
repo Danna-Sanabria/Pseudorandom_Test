@@ -70,3 +70,42 @@ class Chi2Test:
     """Gets Mean and Std values of the samples in the data"""
     def getMeanAndStd(self,data):
         return np.mean(data),np.std(data)
+
+    def chi_cuadrado_test(self, data):
+        # Número de intervalos
+        k = 8
+
+        # Calculamos la longitud de la secuencia
+        n = len(data)
+
+        # Creamos los intervalos
+        intervalos = np.linspace(0, 1, k+1)
+
+        # Contamos las frecuencias observadas en cada intervalo
+        frec_observada, _ = np.histogram(data, bins=intervalos)
+
+        # Calculamos la frecuencia esperada para cada intervalo
+        frec_esperada = np.ones(k) * n / k
+
+        # Calculamos el estadístico chi-cuadrado para cada intervalo
+        chi2_intervalos = ((frec_observada - frec_esperada) ** 2) / frec_esperada
+
+        # Sumamos los chi-cuadrado de todos los intervalos
+        chi2_total = np.sum(chi2_intervalos)
+
+        # Calculamos el valor crítico de chi-cuadrado con 7 grados de libertad
+        valor_critico = chi2.ppf(0.95, k-1)
+
+        print("intervalos: ", intervalos)
+        print("F espe:" , frec_esperada)
+        print("F Obser: ", frec_observada)
+        print("Chi-cuadrado de cada intervalo:")
+        print(chi2_intervalos)
+        print("Chi-cuadrado total:", chi2_total)
+        print("Valor crítico:", valor_critico)
+
+        # Comparamos el chi-cuadrado total con el valor crítico
+        if chi2_total <= valor_critico:
+            print("La secuencia pasa la prueba de uniformidad.")
+        else:
+            print("La secuencia no pasa la prueba de uniformidad.")

@@ -90,16 +90,15 @@ class Controller:
     def Chi2Test(self):
         data =self.read_data_from_file(self.fr.getFilePath())
         self.fr.destroyAlllbls() # Destroy previous labels
-        # self.fr.generateLbl("CHI2 TEST")
         #Make the test
-        statistic, chi_value, obs_freq, expect_freq, bin_edges, status_hypo,n =self.chi2.evaluate(data)
+        self.chi2.chi_cuadrado_test(data)
         #Shows information
-        # self.fr.generateLbl(f"Number of samples: {n}")
-        # self.fr.generateLbl(f"Status: {status_hypo}")
-        # self.fr.generateLbl(f"Observed frequency: {obs_freq}")
-        # self.fr.generateLbl(f"Expected frequency: {expect_freq}")
-        # self.fr.generateLbl(f"Obtained Value: {statistic}")
-        # self.fr.generateLbl(f"Chi2Value Associated: {chi_value}")
+        # self.fr.generateLbl(f"Chi2: {chi2_statistic}",290, 463)
+        # self.fr.generateLbl(f"Valor Crítico: {critical_value}",290, 491)
+        # self.fr.generateLbl(f"Observed frequency: {obs_freq}", 290, 519)
+        # self.fr.generateLbl(f"Expected frequency: {expect_freq}", 290, 547)
+        # self.fr.generateLbl(f"Obtained Value: {statistic}", 290, 603)
+        # self.fr.generateLbl(f"Chi2Value Associated: {chi_value}", 290, 631)
         self.drawChi2Figure(data) #Finally paint the graphic
 
     def PokerTest(self):
