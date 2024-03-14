@@ -67,14 +67,11 @@ class KSTest:
         self.total_datos = len(data)
         self.frecuencia_obtenida = self.calcular_frecuencia_obtenida()
         self.frecuencia_obtenida_acumulada = self.calcular_frecuencia_obtenida_acumulada()
-        # self.calcular_frecuencia_esperada_acumulada = self.calcular_frecuencia_esperada_acumulada()
-        # self.calcular_probabilidad_esperada = self.calcular_probabilidad_esperada()
-        # self.calcular_probabilidad_obtenida = self.calcular_probabilidad_obtenida()
         self.max_diferencia = self.calcular_diferencia_absoluta()
         self.max_dif_permitida = self.findKSValue()
         print(self.findKSValue())
     
-        return self.max_diferencia, self.max_dif_permitida, self.intervalos, self.calcular_probabilidad_esperada, self.calcular_probabilidad_obtenida
+        return self.max_diferencia, self.max_dif_permitida
 
     def calcular_frecuencia_obtenida(self):
         frecuencia_absoluta = [0] * len(self.intervalos)
@@ -162,24 +159,6 @@ class KSTest:
         print(f"\nValor máximo de diferencia absoluta: {max_diferencia:.5f}")
         return max_diferencia
 
-
-
-    """Main method to make test"""
-    def evaluate(self, data):
-        # data = np.sort(data)
-        self.n = len(data)
-        
-        value = self.findKSValue()
-        F = np.arange(1, self.n + 1) / self.n
-        print(F)
-        # Calculamos la distancia máxima entre la función de distribución empírica y la distribución uniforme
-        Dif = np.max(np.abs(F - (np.arange(1, self.n + 1) - 0.5) / self.n)) #Difference between obtained value and theorical value
-        print("datos deentrada: ", data)
-        print("Diferencia es: ", Dif)
-        print("nnnnnn es: ", self.n)
-        print("value: ", value)
-        return Dif, value
-    
     """"Method to find the KS value associated to the number of samples and acceptance_lvl"""
     def findKSValue(self):
         n = len(self.datos)
@@ -206,9 +185,6 @@ class KSTest:
             return 1.85/np.sqrt(self.n)
         elif(self.acceptance_lvl==0.001):
             return 1.95/np.sqrt(self.n)
-    
-    """Gets Mean and Std values of the samples in the data"""
-    def getMeanAndStd(self,data):
-        return np.mean(data),np.std(data)
+
     
 

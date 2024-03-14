@@ -44,22 +44,6 @@ class Chi2Test:
             [51.172, 53.540, 57.153, 60.391, 64.278, 96.578, 101.879, 106.629, 112.329, 116.321],
             [59.196, 61.754, 65.647, 69.126, 73.291, 107.565, 113.145, 118.136, 124.116, 128.299],
             [67.328, 70.065, 74.222, 77.929, 82.358, 118.498, 124.342, 129.561, 135.807, 140.169]])
-        
-    """"Main method to make test"""
-    def evaluate(self, data):
-        n=len(data)
-        bins=int(1+np.log2(n))
-        hist, bin_edges = np.histogram(data, bins=bins)
-        observed_freq = hist
-        expected_freq = n/bins * np.ones(bins) #Calculates the expected frequency based on n samples and intervals
-        chi2_statistic = sum((observed_freq - expected_freq)**2 / expected_freq) #To calculate the statistic
-        chi2_critical_value = self.findKSValue(data)
-        status_hypo=""
-        if chi2_statistic > chi2_critical_value:
-            status_hypo="Reject null hypothesis"
-        else:
-            status_hypo="Cannot reject null hypothesis"
-        return chi2_statistic, chi2_critical_value, observed_freq, expected_freq, bin_edges, status_hypo,n
 
     def chi_cuadrado_test(self, data):
         # Número de intervalos

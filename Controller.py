@@ -73,12 +73,12 @@ class Controller:
         data =self.read_data_from_file(self.fr.getFilePath())
         self.fr.destroyAlllbls() # Destroy previous labels
         
-        dif, max_dif_per, intervalos, frec_esperada, frec_observada  =self.ks.evaluarKS(data) # Evaluate
+        dif, max_dif_per =self.ks.evaluarKS(data) # Evaluate
         
         self.fr.generateLbl(f"Diferencia Máxima: {dif:.5f}", 390, 471)
         self.fr.generateLbl(f"Diferencia Máxima Permitida: {max_dif_per}", 390, 509)
 
-        self.drawKSFigure(intervalos, frec_esperada, frec_observada) #Finally paint the graphic
+        self.drawKSFigure() #Finally paint the graphic
     
     def Chi2Test(self):
         data =self.read_data_from_file(self.fr.getFilePath())
@@ -131,24 +131,28 @@ class Controller:
         self.canvas.draw()
         self.fr.mywindow.update()
     
-    def drawKSFigure(self,intervalos, frec_esperada, frec_observada):
+    def drawKSFigure(self):
         self.fig.clear()
         self.fig = plt.figure(figsize=(7, 4), dpi=100)
         ax = self.fig.add_subplot(111)
-        k = len(intervalos) - 1
-        interval_labels = [f"{intervalos[i]}-{intervalos[i+1]}" for i in range(k)]
+
+        intervalos = [(i / 10, (i + 1) / 10) for i in range(10)]
+        interval_labels = [f"{inicio:.1f}-{fin:.1f}" for inicio, fin in intervalos]
+
         bar_width = 0.35 
-        index = np.arange(k)
-        ax.bar(index, frec_observada, bar_width, alpha=0.5, color='r', label='Frecuencia Observada')
-        ax.bar(index + bar_width, frec_esperada, bar_width, alpha=0.5, color='b', label='Frecuencia Esperada')
+        index = np.arange(len(self.ks.calcular_probabilidad_esperada()))
+        ax.bar(index - bar_width/2, self.ks.calcular_probabilidad_obtenida(), bar_width, alpha=0.5, color='r', label='Frecuencia Observada')
+        ax.bar(index + bar_width/2, self.ks.calcular_probabilidad_esperada(), bar_width, alpha=0.5, color='b', label='Frecuencia Esperada')
+        
         ax.set_xlabel('Intervalo')
         ax.tick_params(axis='x', rotation=45)
-        ax.set_ylabel('Frecuencia')
-        ax.set_title('Frecuencia Esperada vs Frecuencia Observada por Intervalo')
-        ax.set_xticks(index + bar_width / 2)
+        ax.set_ylabel('Probabilidades')
+        ax.set_title('Probabilidad Esperada vs Probabilidad Observada por Intervalo')
+        ax.set_xticks(index)
         ax.set_xticklabels(interval_labels)
         ax.legend()
         ax.grid(True)
+
         self.fig.subplots_adjust(bottom=0.39)
         self.canvas.get_tk_widget().pack_forget()
         self.canvas = FigureCanvasTkAgg(self.fig, master= self.fr.mywindow)
@@ -183,12 +187,16 @@ class Controller:
 
     def drawPokerFigure(self,data, Oi,Ei):
         self.fig.clear()
-        self.fig = plt.figure(figsize=(5, 3), dpi=100)
+        self.fig = plt.figure(figsize=(7, 4), dpi=100)
         ax = self.fig.add_subplot(111)
         tags = ["D","0","T","K","F","P","Q"] # tags for every hand of poker
         ax.set_title("Poker Test")
         ax.bar(tags, Oi, label="Frecuencia observada")
         ax.plot(tags, Ei, label="Frecuencia esperada")
+        ax.set_xlabel('Categoria')
+        ax.set_ylabel('Frecuencia')
+        ax.set_title('Frecuencia por Categoria')
+        self.fig.subplots_adjust(bottom=0.39)
         self.canvas.get_tk_widget().pack_forget()
         self.canvas = FigureCanvasTkAgg(self.fig, master= self.fr.mywindow)
         self.canvas.draw()
