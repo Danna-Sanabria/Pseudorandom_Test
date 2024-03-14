@@ -109,11 +109,11 @@ class Controller:
         #Make the test
         statistics, counts, value,n, Oi,Ei=self.poker.evaluate(data)
         #Shows information
-        self.fr.generateLbl(f"Number of samples: {n}")
-        self.fr.generateLbl(f"Obtained Value: {value}")
-        self.fr.generateLbl(f"Poker counts: {counts}")
-        self.fr.generateLbl(f"PokerValue Associated: {statistics}")
-        self.drawPokerFigure(data,Oi,Ei) #Finally paint the graphic
+        self.fr.generateLbl(f"Number of samples: {n}", 390, 471)
+        self.fr.generateLbl(f"Obtained Value: {value}", 390, 509)
+        self.fr.generateLbl(f"Poker counts: {counts}", 390, 547)
+        self.fr.generateLbl(f"PokerValue Associated: {statistics}", 390, 585)
+        # self.drawPokerFigure(data,Oi,Ei) #Finally paint the graphic
 
     def drawMeanFigure(self,li,ls,m, name1, name2, name3):
         self.fig = plt.figure(figsize=(7, 3), dpi=120)
