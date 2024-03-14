@@ -33,30 +33,24 @@ class Controller:
             df = pd.read_excel(filename, header=None, decimal=',')
         else:
             raise ValueError("Formato de archivo no compatible. Proporcione un archivo CSV o Excel.")
-
         data = df.values.flatten().tolist()
         return data
 
     def meanTest(self):
         data = self.read_data_from_file(self.fr.getFilePath())
         self.fr.destroyAlllbls() 
-
         li,ls,m = self.meanTest.evaluate(data)
-
         if self.meanTest.defineResult(li, ls, m):
             is_true = True
         else:
             is_true = False
-
         test = tk.Label(text="TEST", font=("Georgia", 12))
         test.place(x=484, y=431)
 
         self.changeLabelColor(test, is_true)
-
         self.fr.generateLbl(f"Limite Superior: {ls}", 390, 471)
         self.fr.generateLbl(f"Media: {m}", 390, 509)
         self.fr.generateLbl(f"Limite Inferior: {li}", 390, 547)
-
         self.drawMeanFigure(li,ls,m,"Limite Superior", "Media", "Limite Inferior" ) 
     
     def changeLabelColor(self, label, is_true):
@@ -78,38 +72,27 @@ class Controller:
     def KSTest(self):
         data =self.read_data_from_file(self.fr.getFilePath())
         self.fr.destroyAlllbls() # Destroy previous labels
-        value = self.ks.evaluarKS(data)
         
-        dif, max_dif_per =self.ks.evaluarKS(data) # Evaluate
+        dif, max_dif_per, intervalos, frec_esperada, frec_observada  =self.ks.evaluarKS(data) # Evaluate
         
         self.fr.generateLbl(f"Diferencia Máxima: {dif:.5f}", 390, 471)
         self.fr.generateLbl(f"Diferencia Máxima Permitida: {max_dif_per}", 390, 509)
 
-        self.drawKSFigure(data) #Finally paint the graphic
+        self.drawKSFigure(intervalos, frec_esperada, frec_observada) #Finally paint the graphic
     
     def Chi2Test(self):
         data =self.read_data_from_file(self.fr.getFilePath())
         self.fr.destroyAlllbls() # Destroy previous labels
-        #Make the test
-        self.chi2.chi_cuadrado_test(data)
-        #Shows information
-        # self.fr.generateLbl(f"Chi2: {chi2_statistic}",290, 463)
-        # self.fr.generateLbl(f"Valor Crítico: {critical_value}",290, 491)
-        # self.fr.generateLbl(f"Observed frequency: {obs_freq}", 290, 519)
-        # self.fr.generateLbl(f"Expected frequency: {expect_freq}", 290, 547)
-        # self.fr.generateLbl(f"Obtained Value: {statistic}", 290, 603)
-        # self.fr.generateLbl(f"Chi2Value Associated: {chi_value}", 290, 631)
-        self.drawChi2Figure(data) #Finally paint the graphic
+        chi2_total, valor_critico, intervalos, frec_observada, frec_esperada = self.chi2.chi_cuadrado_test(data)
+        self.fr.generateLbl(f"Chi2: {chi2_total}",290, 463)
+        self.fr.generateLbl(f"Valor Crítico: {valor_critico}",290, 491)
+        self.drawChi2Figure(data, intervalos, frec_observada, frec_esperada) #Finally paint the graphic
 
     def PokerTest(self):
         data =self.read_data_from_file(self.fr.getFilePath())
         self.fr.destroyAlllbls() # Destroy previous labels
-        # self.fr.generateLbl("POKER TEST")
-        #Make the test
-        #chi2.ppf(0.05, 6), counts, np.sum(finals), n, self.Oi, Ei
 
         statistics, counts, value,n, Oi,Ei = self.poker.evaluate(data)
-        #Shows information
         self.fr.generateLbl(f"Número de muestras: {n}", 290, 463)
         self.fr.generateLbl(f"Sumatoria: {value}", 290, 491)
         self.fr.generateLbl(f"Poker : {counts}", 290, 519)
@@ -126,15 +109,9 @@ class Controller:
     def drawMeanFigure(self,li,ls,m, name1, name2, name3):
         self.fig = plt.figure(figsize=(7, 3), dpi=120)
         ax = self.fig.add_subplot(111)
-        
-        # Define los nombres y valores para las barras
         names = [name1, name2, name3]
         values = [ls, m, li]
-
-        # Crea las barras con los nombres y valores correspondientes
         bars = ax.bar(names, values, alpha=0.3)
-
-        # Añade etiquetas debajo de cada barra
         for bar, value in zip(bars, values):
             ax.text(bar.get_x() + bar.get_width() / 2, 
                     value,
@@ -144,62 +121,64 @@ class Controller:
         ax.set_ylim(0, 1)  # Establece el rango del eje vertical
         ax.set_title("Resultado Prueba de Medias")
         ax.grid(True)  # Añade cuadrícula al gráfico
-
-        # Asigna un color diferente a cada barra
         colors = ['blue', 'green', 'red']
         for bar, color in zip(bars, colors):
             bar.set_color(color)
         
-        # Actualiza el canvas
         self.canvas.get_tk_widget().pack_forget()
         self.canvas = FigureCanvasTkAgg(self.fig, master=self.fr.mywindow)
         self.canvas.get_tk_widget().pack(side=tk.BOTTOM)
         self.canvas.draw()
-        # Actualiza la ventana con la nueva figura
         self.fr.mywindow.update()
     
-    def drawKSFigure(self,data):
+    def drawKSFigure(self,intervalos, frec_esperada, frec_observada):
         self.fig.clear()
-        self.fig = plt.figure(figsize=(7, 4))
+        self.fig = plt.figure(figsize=(7, 4), dpi=100)
         ax = self.fig.add_subplot(111)
-        mu, sigma= self.ks.getMeanAndStd(data)
-        x = np.linspace(norm.ppf(0.01), norm.ppf(0.99), 100)
-        # pdf = norm.pdf(x, mu, sigma)
-        cdf = norm.cdf(x, mu, sigma)
-        e_cdf = ECDF(data)
-        ax.set_title("KS Test")
-        ax.plot(e_cdf.x, e_cdf.y, label='Empirical CDF')
-        ax.plot(x, cdf, label='Theoretical CDF')
-
+        k = len(intervalos) - 1
+        interval_labels = [f"{intervalos[i]}-{intervalos[i+1]}" for i in range(k)]
+        bar_width = 0.35 
+        index = np.arange(k)
+        ax.bar(index, frec_observada, bar_width, alpha=0.5, color='r', label='Frecuencia Observada')
+        ax.bar(index + bar_width, frec_esperada, bar_width, alpha=0.5, color='b', label='Frecuencia Esperada')
+        ax.set_xlabel('Intervalo')
+        ax.tick_params(axis='x', rotation=45)
+        ax.set_ylabel('Frecuencia')
+        ax.set_title('Frecuencia Esperada vs Frecuencia Observada por Intervalo')
+        ax.set_xticks(index + bar_width / 2)
+        ax.set_xticklabels(interval_labels)
+        ax.legend()
+        ax.grid(True)
+        self.fig.subplots_adjust(bottom=0.39)
         self.canvas.get_tk_widget().pack_forget()
         self.canvas = FigureCanvasTkAgg(self.fig, master= self.fr.mywindow)
         self.canvas.draw()
         self.canvas.get_tk_widget().pack(side=tk.BOTTOM)
-        # Update the window with the new figure
         self.fr.mywindow.update()
     
-    def drawChi2Figure(self,data):
+    def drawChi2Figure(self,data, intervalos, frec_observada, frec_esperada):
         self.fig.clear()
-        self.fig = plt.figure(figsize=(5, 3), dpi=100)
+        self.fig = plt.figure(figsize=(7, 4), dpi=100)
         ax = self.fig.add_subplot(111)
-        mu, sigma = self.chi2.getMeanAndStd(data)
-        n_bins = int(1 + np.log2(len(data)))
-        bins = np.histogram_bin_edges(data, bins=n_bins)
-        # Calculate the observed frequencies
-        observed, _ = np.histogram(data, bins=bins)
-
-        # Calculate the expected frequencies using the normal distribution
-        expected = len(data) * np.diff(norm.cdf(bins, mu, sigma))
-
-        # Plot the histogram and compare the observed and expected frequencies
-        ax.set_title("Chi2 Test")
-        ax.hist(data, bins=bins, alpha=0.5, label='Observed') 
-        ax.plot(bins[1:], expected, label='Expected')
+        k = len(intervalos) - 1
+        interval_labels = [f"{intervalos[i]:.4g}-{intervalos[i+1]:.4g}" for i in range(k)]
+        bar_width = 0.35 
+        index = np.arange(k)
+        ax.bar(index, frec_observada, bar_width, alpha=0.5, color='r', label='Frecuencia Observada')
+        ax.bar(index + bar_width, frec_esperada, bar_width, alpha=0.5, color='b', label='Frecuencia Esperada')
+        ax.set_xlabel('Intervalo')
+        ax.tick_params(axis='x', rotation=45)
+        ax.set_ylabel('Frecuencia')
+        ax.set_title('Frecuencia Esperada vs Frecuencia Observada por Intervalo')
+        ax.set_xticks(index + bar_width / 2)
+        ax.set_xticklabels(interval_labels)
+        ax.legend()
+        ax.grid(True)
+        self.fig.subplots_adjust(bottom=0.39)
         self.canvas.get_tk_widget().pack_forget()
         self.canvas = FigureCanvasTkAgg(self.fig, master= self.fr.mywindow)
         self.canvas.draw()
         self.canvas.get_tk_widget().pack(side=tk.BOTTOM)
-        # Update the window with the new figure
         self.fr.mywindow.update()
 
     def drawPokerFigure(self,data, Oi,Ei):
@@ -214,7 +193,6 @@ class Controller:
         self.canvas = FigureCanvasTkAgg(self.fig, master= self.fr.mywindow)
         self.canvas.draw()
         self.canvas.get_tk_widget().pack(side=tk.BOTTOM)
-        # Update the window with the new figure
         self.fr.mywindow.update()
 
 if __name__ == "__main__":

@@ -60,16 +60,6 @@ class Chi2Test:
         else:
             status_hypo="Cannot reject null hypothesis"
         return chi2_statistic, chi2_critical_value, observed_freq, expected_freq, bin_edges, status_hypo,n
-    
-    """"Method to find the Chi2 value associated to the df and acceptance_lvl"""
-    def findKSValue(self,data):
-        n=len(data) #gets the number of samples
-        bins=int(1+np.log2(n)) #gets the number of intervals
-        return self.chi2table[bins-1,6] #looks for the value in the table
-    
-    """Gets Mean and Std values of the samples in the data"""
-    def getMeanAndStd(self,data):
-        return np.mean(data),np.std(data)
 
     def chi_cuadrado_test(self, data):
         # Número de intervalos
@@ -77,9 +67,10 @@ class Chi2Test:
 
         # Calculamos la longitud de la secuencia
         n = len(data)
-
+        min_data = min(data)
+        max_data = max(data)
         # Creamos los intervalos
-        intervalos = np.linspace(0, 1, k+1)
+        intervalos = np.linspace(min_data, max_data, k+1)
 
         # Contamos las frecuencias observadas en cada intervalo
         frec_observada, _ = np.histogram(data, bins=intervalos)
@@ -96,6 +87,7 @@ class Chi2Test:
         # Calculamos el valor crítico de chi-cuadrado con 7 grados de libertad
         valor_critico = chi2.ppf(0.95, k-1)
 
+        print(data)
         print("intervalos: ", intervalos)
         print("F espe:" , frec_esperada)
         print("F Obser: ", frec_observada)
@@ -109,3 +101,5 @@ class Chi2Test:
             print("La secuencia pasa la prueba de uniformidad.")
         else:
             print("La secuencia no pasa la prueba de uniformidad.")
+
+        return chi2_total, valor_critico, intervalos, frec_observada, frec_esperada

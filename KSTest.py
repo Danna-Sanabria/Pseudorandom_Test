@@ -74,7 +74,7 @@ class KSTest:
         self.max_dif_permitida = self.findKSValue()
         print(self.findKSValue())
     
-        return self.max_diferencia, self.max_dif_permitida
+        return self.max_diferencia, self.max_dif_permitida, self.intervalos, self.calcular_probabilidad_esperada, self.calcular_probabilidad_obtenida
 
     def calcular_frecuencia_obtenida(self):
         frecuencia_absoluta = [0] * len(self.intervalos)
