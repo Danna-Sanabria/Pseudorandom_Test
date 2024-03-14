@@ -48,26 +48,6 @@ class Frame:
         PokerTest = tk.Button(self.mywindow, text="Prueba de Poker", command=self.control.PokerTest, width=18, height=2, bg="#ff6c5e",fg="black" , font = ("Georgia", 12), bd=1.5)
         PokerTest.place(x=812 , y=358)
 
-        # self.createMenu()
-
-        # button_to_do = tk.Button(self.mywindow, text="MAKE TEST", command=self.control.makeTest)
-        # button_to_do.place(x=280,y=160)
-
-    #Creates the dropdown menu
-    # def createMenu(self):
-    #     options = ["Mean Test", "Mean Test","Variance Test", "KS Test", "Chi2 Test", "Poker Test"]
-    #     self.selected_option.set(options[0])
-    #     menu = ttk.OptionMenu(self.mywindow,self.selected_option, *options)
-    #     menu.place(x = 120, y = 160)
-
-    # #Creates a label to describe a graphic
-    # def generateLblToDescribeGraph(self, description):
-    #     new_lbl = tk.Label(text = self.cutString(description), bg = "#FFEEDD")
-    #     new_lbl.place(x=520,y=500)
-    #     self.labels.append(new_lbl)
-    #     self.mywindow.update()
-        
-    #Allows open file explorer and choose a file
 
     def buttonVerificacion(self, color, x, y):
         test_button = tk.Button(self.mywindow, command=self.control.meanTest, width=18, height=3, bg=color, bd=1.5)
