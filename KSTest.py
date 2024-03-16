@@ -74,6 +74,9 @@ class KSTest:
     
         return self.max_diferencia, self.max_dif_permitida
 
+    def validate(self):
+        return self.max_diferencia <= self.max_dif_permitida
+
     def calcular_frecuencia_obtenida(self):
         frecuencia_absoluta = [0] * len(self.intervalos)
         for dato in self.datos:

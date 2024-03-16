@@ -40,30 +40,32 @@ class Controller:
         data = self.read_data_from_file(self.fr.getFilePath())
         self.fr.destroyAlllbls() 
         li,ls,m = self.meanTest.evaluate(data)
+        
         if self.meanTest.defineResult(li, ls, m):
             is_true = True
         else:
             is_true = False
-        test = tk.Label(text="TEST", font=("Georgia", 12))
-        test.place(x=484, y=431)
 
-        self.changeLabelColor(test, is_true)
+        borde_color = "#00FF00" if is_true else "#FF0000"
+        self.fr.meanTest_button.config(foreground =borde_color)  
+
         self.fr.generateLbl(f"Limite Superior: {ls}", 390, 471)
         self.fr.generateLbl(f"Media: {m}", 390, 509)
         self.fr.generateLbl(f"Limite Inferior: {li}", 390, 547)
         self.drawMeanFigure(li,ls,m,"Limite Superior", "Media", "Limite Inferior" ) 
-    
-    def changeLabelColor(self, label, is_true):
-        if is_true:
-            color = "#00FF00"  
-        else:
-            color = "#FF0000"  
-        label.config(bg=color)
 
     def varianceTest(self):
         data =self.read_data_from_file(self.fr.getFilePath())
         self.fr.destroyAlllbls() 
         li,ls,var = self.varTest.evaluate(data)
+
+        if self.varTest.valid():
+            is_true = True
+        else:
+            is_true = False
+        borde_color = "#00FF00" if is_true else "#FF0000"
+        self.fr.VarianceTest.config(foreground =borde_color) 
+
         self.fr.generateLbl(f"Limite Superior: {ls}", 390, 471)
         self.fr.generateLbl(f"Varianza de la Muestra: {var}", 390, 509)
         self.fr.generateLbl(f"Limite Inferior: {li}", 390, 547) 
@@ -78,20 +80,34 @@ class Controller:
         self.fr.generateLbl(f"Diferencia Máxima: {dif:.5f}", 390, 471)
         self.fr.generateLbl(f"Diferencia Máxima Permitida: {max_dif_per}", 390, 509)
 
+        if self.ks.validate():
+            is_true = True
+        else:
+            is_true = False
+        borde_color = "#00FF00" if is_true else "#FF0000"
+        self.fr.KSTest.config(foreground =borde_color)
+
         self.drawKSFigure() #Finally paint the graphic
     
     def Chi2Test(self):
         data =self.read_data_from_file(self.fr.getFilePath())
         self.fr.destroyAlllbls() # Destroy previous labels
         chi2_total, valor_critico, intervalos, frec_observada, frec_esperada = self.chi2.chi_cuadrado_test(data)
+
+        if self.chi2.validate():
+            is_true = True
+        else:
+            is_true = False
+        borde_color = "#00FF00" if is_true else "#FF0000"
+        self.fr.Chi2Test.config(foreground =borde_color)
+
         self.fr.generateLbl(f"Chi2: {chi2_total}",290, 463)
         self.fr.generateLbl(f"Valor Crítico: {valor_critico}",290, 491)
         self.drawChi2Figure(data, intervalos, frec_observada, frec_esperada) #Finally paint the graphic
 
     def PokerTest(self):
         data =self.read_data_from_file(self.fr.getFilePath())
-        self.fr.destroyAlllbls() # Destroy previous labels
-
+        self.fr.destroyAlllbls() # Destroy previous labels  
         statistics, counts, value,n, Oi,Ei = self.poker.evaluate(data)
         self.fr.generateLbl(f"Número de muestras: {n}", 290, 463)
         self.fr.generateLbl(f"Sumatoria: {value}", 290, 491)
@@ -104,6 +120,14 @@ class Controller:
         self.fr.generateLbl(f"F: Tercia & par", 811, 793)
         self.fr.generateLbl(f"P: Cuatro cartas del mismo valor", 811, 813)
         self.fr.generateLbl(f"Q: Cinco cartas del mismo valor", 811, 833)
+
+        if self.poker.validate():
+            is_true = True
+        else:
+            is_true = False
+        borde_color = "#00FF00" if is_true else "#FF0000"
+        self.fr.PokerTest.config(foreground =borde_color)
+
         self.drawPokerFigure(data,Oi,Ei) #Finally paint the graphic
 
     def drawMeanFigure(self,li,ls,m, name1, name2, name3):

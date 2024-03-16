@@ -17,10 +17,15 @@ class PokerTest:
 
         Ei = [prob * n for prob in self.prob]  # Expected frequencies
 
+        
         finals = [((h - o) ** 2) / h for h, o in zip(Ei, self.Oi)]  # Calculate chi-square statistic
         counts = f"D: {self.Oi[0]}  O: {self.Oi[1]}  T: {self.Oi[2]}  K: {self.Oi[3]}  F: {self.Oi[4]}  P: {self.Oi[5]}  Q: {self.Oi[6]}"
-        
-        return chi2.isf(0.05, 6), counts, np.sum(finals), n, self.Oi, Ei
+        self.statistics = chi2.isf(0.05, 6)
+        self.sumatoria = np.sum(finals)
+        return self.statistics, counts, self.sumatoria, n, self.Oi, Ei
+    
+    def validate(self):
+        return self.sumatoria <= self.statistics
 
     """Evaluate if the number has 5 same digits"""
     @staticmethod

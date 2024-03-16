@@ -66,10 +66,10 @@ class Chi2Test:
         chi2_intervalos = ((frec_observada - frec_esperada) ** 2) / frec_esperada
 
         # Sumamos los chi-cuadrado de todos los intervalos
-        chi2_total = np.sum(chi2_intervalos)
+        self.chi2_total = np.sum(chi2_intervalos)
 
         # Calculamos el valor crítico de chi-cuadrado con 7 grados de libertad
-        valor_critico = chi2.ppf(0.95, k-1)
+        self.valor_critico = chi2.ppf(0.95, k-1)
 
         print(data)
         print("intervalos: ", intervalos)
@@ -77,13 +77,16 @@ class Chi2Test:
         print("F Obser: ", frec_observada)
         print("Chi-cuadrado de cada intervalo:")
         print(chi2_intervalos)
-        print("Chi-cuadrado total:", chi2_total)
-        print("Valor crítico:", valor_critico)
+        print("Chi-cuadrado total:", self.chi2_total)
+        print("Valor crítico:", self.valor_critico)
 
         # Comparamos el chi-cuadrado total con el valor crítico
-        if chi2_total <= valor_critico:
+        if self.chi2_total <= self.valor_critico:
             print("La secuencia pasa la prueba de uniformidad.")
         else:
             print("La secuencia no pasa la prueba de uniformidad.")
 
-        return chi2_total, valor_critico, intervalos, frec_observada, frec_esperada
+        return self.chi2_total, self.valor_critico, intervalos, frec_observada, frec_esperada
+    
+    def validate(self):
+        return self.chi2_total <= self.valor_critico

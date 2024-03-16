@@ -18,14 +18,9 @@ class VarianceTest:
         self.ls = self.x2/(12*(numberSample-1)) #Higher bounumberSampled
         return self.li,self.ls, self.var
     
-    """"Reject or approve numbers"""
-    def discriminate_nums(self,li,ls,data):
-        approved_nums=[]
-        for i in data:
-            if(ls<i<li): #if the number is between li and ls, it's accepted
-                approved_nums.append(i) 
-        return approved_nums
     
     """Evaluate if variance of data is between li and ls, if it is, it passes the test"""
     def valid(self):
         return self.ls<self.var<self.li
+    
+    
