@@ -11,7 +11,7 @@ class Frame:
         self.mywindow.title("PRUEBAS # PSEUDOALEATORIOS")
         self.mywindow.resizable(False,False)
         self.mywindow.config(background = "#F2F2F0")
-        main_title = tk.Label(text = "PRUEBAS DE NÚMEROS PSEUDOALEATORIOS", anchor=tk.CENTER, font = ("Georgia", 26), bg = "#F2F2F0", fg = "#F06E3E", width = "500", height = "2")
+        main_title = tk.Label(text = "PRUEBAS DE NÚMEROS PSEUDOALEATORIOS", anchor=tk.CENTER, font = ("Georgia", 26), bg = "#F2F2F0", fg = "#025959", width = "500", height = "2")
         main_title.pack()
         self.selected_option = tk.StringVar()
         self.selected_file = tk.StringVar()
@@ -33,19 +33,19 @@ class Frame:
         select_test = tk.Label(text = "Seleccione la prueba a realizar", font = ("Georgia", 17))
         select_test.place(x = 381, y = 302)
 
-        self.meanTest_button = tk.Button(self.mywindow, text="Prueba de medias", command=self.control.meanTest, width=18, height=2, bg="#5c9b9b", fg="black", font=("Georgia", 12), bd=2)
+        self.meanTest_button = tk.Button(self.mywindow, text="Prueba de medias", command=self.control.meanTest, width=18, height=2, bg="#386161", fg="black", font=("Georgia", 12), bd=2)
         self.meanTest_button.place(x=100, y=358)
 
-        self.VarianceTest = tk.Button(self.mywindow, text="Prueba de varianza", command=self.control.varianceTest, width=18, height=2, bg="#5c9b9b",fg="black" , font = ("Georgia", 12), bd=1.5)
+        self.VarianceTest = tk.Button(self.mywindow, text="Prueba de varianza", command=self.control.varianceTest, width=18, height=2, bg="#386161",fg="black" , font = ("Georgia", 12), bd=1.5)
         self.VarianceTest.place(x=278 , y=358 )
 
-        self.KSTest = tk.Button(self.mywindow, text="Prueba de KS", command=self.control.KSTest, width=18, height=2, bg="#5c9b9b",fg="black" , font = ("Georgia", 12), bd=1.5)
+        self.KSTest = tk.Button(self.mywindow, text="Prueba de KS", command=self.control.KSTest, width=18, height=2, bg="#386161",fg="black" , font = ("Georgia", 12), bd=1.5)
         self.KSTest.place(x=456 , y=358)
 
-        self.Chi2Test = tk.Button(self.mywindow, text="Prueba de Chi2", command=self.control.Chi2Test, width=18, height=2, bg="#5c9b9b",fg="black" , font = ("Georgia", 12), bd=1.5)
+        self.Chi2Test = tk.Button(self.mywindow, text="Prueba de Chi2", command=self.control.Chi2Test, width=18, height=2, bg="#386161",fg="black" , font = ("Georgia", 12), bd=1.5)
         self.Chi2Test.place(x=634 , y=358)
 
-        self.PokerTest = tk.Button(self.mywindow, text="Prueba de Poker", command=self.control.PokerTest, width=18, height=2, bg="#5c9b9b",fg="black" , font = ("Georgia", 12), bd=1.5)
+        self.PokerTest = tk.Button(self.mywindow, text="Prueba de Poker", command=self.control.PokerTest, width=18, height=2, bg="#386161",fg="black" , font = ("Georgia", 12), bd=1.5)
         self.PokerTest.place(x=812 , y=358)
 
 

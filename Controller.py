@@ -145,7 +145,7 @@ class Controller:
         ax.set_ylim(0, 1)  # Establece el rango del eje vertical
         ax.set_title("Resultado Prueba de Medias")
         ax.grid(True)  # Añade cuadrícula al gráfico
-        colors = ['blue', 'green', 'red']
+        colors = ['#1B9CFC', '#F97F51', '#82589F']
         for bar, color in zip(bars, colors):
             bar.set_color(color)
         
@@ -165,8 +165,8 @@ class Controller:
 
         bar_width = 0.35 
         index = np.arange(len(self.ks.calcular_probabilidad_esperada()))
-        ax.bar(index - bar_width/2, self.ks.calcular_probabilidad_obtenida(), bar_width, alpha=0.5, color='r', label='Frecuencia Observada')
-        ax.bar(index + bar_width/2, self.ks.calcular_probabilidad_esperada(), bar_width, alpha=0.5, color='b', label='Frecuencia Esperada')
+        ax.bar(index - bar_width/2, self.ks.calcular_probabilidad_obtenida(), bar_width, alpha=0.5, color='#22a6b3', label='Frecuencia Observada')
+        ax.bar(index + bar_width/2, self.ks.calcular_probabilidad_esperada(), bar_width, alpha=0.5, color='#be2edd', label='Frecuencia Esperada')
         
         ax.set_xlabel('Intervalo')
         ax.tick_params(axis='x', rotation=45)
@@ -192,8 +192,8 @@ class Controller:
         interval_labels = [f"{intervalos[i]:.4g}-{intervalos[i+1]:.4g}" for i in range(k)]
         bar_width = 0.35 
         index = np.arange(k)
-        ax.bar(index, frec_observada, bar_width, alpha=0.5, color='r', label='Frecuencia Observada')
-        ax.bar(index + bar_width, frec_esperada, bar_width, alpha=0.5, color='b', label='Frecuencia Esperada')
+        ax.bar(index, frec_observada, bar_width, alpha=0.5, color='#009432', label='Frecuencia Observada')
+        ax.bar(index + bar_width, frec_esperada, bar_width, alpha=0.5, color='#EE5A24', label='Frecuencia Esperada')
         ax.set_xlabel('Intervalo')
         ax.tick_params(axis='x', rotation=45)
         ax.set_ylabel('Frecuencia')
@@ -215,7 +215,8 @@ class Controller:
         ax = self.fig.add_subplot(111)
         tags = ["D","0","T","K","F","P","Q"] # tags for every hand of poker
         ax.set_title("Poker Test")
-        ax.bar(tags, Oi, label="Frecuencia observada")
+        colores = ['#D980FA', '#12CBC4', '#F0C180', '#EEBCD3', '#A5E7EF', '#EFE7B1', '#BAEFCE']
+        ax.bar(tags, Oi, label="Frecuencia observada", color=colores)
         ax.plot(tags, Ei, label="Frecuencia esperada")
         ax.set_xlabel('Categoria')
         ax.set_ylabel('Frecuencia')
