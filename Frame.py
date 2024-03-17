@@ -24,28 +24,25 @@ class Frame:
         select_file_lbl = tk.Label(text = "Seleccione los números a probar", font = ("Georgia", 17))
         select_file_lbl.place(x = 400, y = 100)
 
-        # self.graphic_lbl = tk.Label(text = "NUMBERS DISTRIBUTION", bg = "#FFEEDD")
-        # self.graphic_lbl.place(x = 470, y = 147)
-
         browse_button = tk.Button(self.mywindow, text="Adjuntar", command=self.browseFiles, width=15, height=2, bg="#025959",fg="white" , font = ("Georgia", 12) , highlightbackground="#FF0000", highlightthickness=2)
         browse_button.place(x=500 , y=147)
 
         select_test = tk.Label(text = "Seleccione la prueba a realizar", font = ("Georgia", 17))
         select_test.place(x = 381, y = 302)
 
-        self.meanTest_button = tk.Button(self.mywindow, text="Prueba de medias", command=self.control.meanTest, width=18, height=2, bg="#386161", fg="black", font=("Georgia", 12), bd=2)
+        self.meanTest_button = tk.Button(self.mywindow, text="Prueba de medias", command=self.control.meanTest, width=18, height=2, bg="#012E40", fg="#dff9fb", font=("Georgia", 12), bd=2)
         self.meanTest_button.place(x=100, y=358)
 
-        self.VarianceTest = tk.Button(self.mywindow, text="Prueba de varianza", command=self.control.varianceTest, width=18, height=2, bg="#386161",fg="black" , font = ("Georgia", 12), bd=1.5)
+        self.VarianceTest = tk.Button(self.mywindow, text="Prueba de varianza", command=self.control.varianceTest, width=18, height=2, bg="#012E40",fg="#dff9fb" , font = ("Georgia", 12), bd=1.5)
         self.VarianceTest.place(x=278 , y=358 )
 
-        self.KSTest = tk.Button(self.mywindow, text="Prueba de KS", command=self.control.KSTest, width=18, height=2, bg="#386161",fg="black" , font = ("Georgia", 12), bd=1.5)
+        self.KSTest = tk.Button(self.mywindow, text="Prueba de KS", command=self.control.KSTest, width=18, height=2, bg="#012E40",fg="#dff9fb" , font = ("Georgia", 12), bd=1.5)
         self.KSTest.place(x=456 , y=358)
 
-        self.Chi2Test = tk.Button(self.mywindow, text="Prueba de Chi2", command=self.control.Chi2Test, width=18, height=2, bg="#386161",fg="black" , font = ("Georgia", 12), bd=1.5)
+        self.Chi2Test = tk.Button(self.mywindow, text="Prueba de Chi2", command=self.control.Chi2Test, width=18, height=2, bg="#012E40",fg="#dff9fb" , font = ("Georgia", 12), bd=1.5)
         self.Chi2Test.place(x=634 , y=358)
 
-        self.PokerTest = tk.Button(self.mywindow, text="Prueba de Poker", command=self.control.PokerTest, width=18, height=2, bg="#386161",fg="black" , font = ("Georgia", 12), bd=1.5)
+        self.PokerTest = tk.Button(self.mywindow, text="Prueba de Poker", command=self.control.PokerTest, width=18, height=2, bg="#012E40",fg="#dff9fb" , font = ("Georgia", 12), bd=1.5)
         self.PokerTest.place(x=812 , y=358)
 
 
@@ -97,7 +94,7 @@ class Frame:
         self.mywindow.update()
         return new_lbl
 
-    def messageAlert(message):
+    def messageAlert(self, message):
         messagebox.showinfo("Alerta", message)
 
     

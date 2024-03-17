@@ -26,15 +26,20 @@ class Controller:
         self.fr.mywindow.mainloop()
 
     """It grabs the data from the given file path""" 
+
     def read_data_from_file(self, filename):
-        if filename.endswith('.csv'):
-            df = pd.read_csv(filename, header=None, decimal=',', delimiter=';')
-        elif filename.endswith('.xlsx') or filename.endswith('.xls'):
-            df = pd.read_excel(filename, header=None, decimal=',')
-        else:
-            raise ValueError("Formato de archivo no compatible. Proporcione un archivo CSV o Excel.")
-        data = df.values.flatten().tolist()
-        return data
+        try:
+            if filename.endswith('.csv'):
+                df = pd.read_csv(filename, header=None, decimal=',', delimiter=';')
+            elif filename.endswith('.xlsx') or filename.endswith('.xls'):
+                df = pd.read_excel(filename, header=None, decimal=',')
+            else:
+                raise ValueError("Formato de archivo no compatible. Proporcione un archivo CSV o Excel.")
+            data = df.values.flatten().tolist()
+            return data
+        except Exception as e:
+            self.fr.messageAlert("Formato de archivo no compatible.\nProporcione un archivo CSV o Excel.")
+
 
     def meanTest(self):
         data = self.read_data_from_file(self.fr.getFilePath())
