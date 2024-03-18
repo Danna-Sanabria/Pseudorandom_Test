@@ -136,7 +136,7 @@ class Controller:
         self.drawPokerFigure(data,Oi,Ei) #Finally paint the graphic
 
     def drawMeanFigure(self,li,ls,m, name1, name2, name3):
-        self.fig = plt.figure(figsize=(7, 3), dpi=120)
+        self.fig = plt.figure(figsize=(7, 4), dpi=100)
         ax = self.fig.add_subplot(111)
         names = [name1, name2, name3]
         values = [ls, m, li]
@@ -158,6 +158,7 @@ class Controller:
         self.canvas = FigureCanvasTkAgg(self.fig, master=self.fr.mywindow)
         self.canvas.get_tk_widget().pack(side=tk.BOTTOM)
         self.canvas.draw()
+        self.fig.subplots_adjust(bottom=0.10)
         self.fr.mywindow.update()
     
     def drawKSFigure(self):
@@ -212,6 +213,7 @@ class Controller:
         self.canvas = FigureCanvasTkAgg(self.fig, master= self.fr.mywindow)
         self.canvas.draw()
         self.canvas.get_tk_widget().pack(side=tk.BOTTOM)
+
         self.fr.mywindow.update()
 
     def drawPokerFigure(self,data, Oi,Ei):
