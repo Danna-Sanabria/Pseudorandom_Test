@@ -9,18 +9,18 @@ Esta prueba se basa en la hipótesis de que los números generados siguen una di
 1. Obtener la media. La media (o promedio) de los números se calcula sumando todos los números y dividiendo por la cantidad total de números. En notación matemática, esto se expresa como:
 
 
-    ![alt text](.\resouce\image-5.png)
+   ![image](https://github.com/Danna-Sanabria/Pseudorandom_Test/assets/83075069/9bd5608f-f91e-40a8-a944-7235ed264277)
 
 
     donde n es la cantidad total de números y ri​ es el i-ésimo número.
 
-2. Obtener los límites inferior y superior. Estos límites se calculan utilizando la distribución normal estándar y un nivel de confianza predefinido (usualmente 95%). Los límites se calculan como:
+3. Obtener los límites inferior y superior. Estos límites se calculan utilizando la distribución normal estándar y un nivel de confianza predefinido (usualmente 95%). Los límites se calculan como:
 
-    ![alt text](resouce\LILS.png)
+    ![image](https://github.com/Danna-Sanabria/Pseudorandom_Test/assets/83075069/2c790b56-0a97-4d47-87d4-43921ea7ec0d)
 
     donde zα/2​ es el valor crítico de la distribución normal estándar para un nivel de confianza de α.
 
-3. Comprobar si la media se encuentra entre los límites inferior y superior. Si la media calculada en el paso 1 se encuentra dentro de los límites calculados en el paso 2, entonces se puede concluir que los números pasan la prueba de medias.
+4. Comprobar si la media se encuentra entre los límites inferior y superior. Si la media calculada en el paso 1 se encuentra dentro de los límites calculados en el paso 2, entonces se puede concluir que los números pasan la prueba de medias.
 
 ##  Prueba de Varianza
 
