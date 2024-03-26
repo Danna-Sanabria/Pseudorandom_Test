@@ -44,11 +44,6 @@ class Frame:
 
         self.PokerTest = tk.Button(self.mywindow, text="Prueba de Poker", command=self.control.PokerTest, width=18, height=2, bg="#012E40",fg="#dff9fb" , font = ("Georgia", 12), bd=1.5)
         self.PokerTest.place(x=812 , y=358)
-
-
-    def buttonVerificacion(self, color, x, y):
-        test_button = tk.Button(self.mywindow, command=self.control.meanTest, width=18, height=3, bg=color, bd=1.5)
-        test_button.place(x, y)
         
     def browseFiles(self):
         file = filedialog.askopenfilename()

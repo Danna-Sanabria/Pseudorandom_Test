@@ -31,6 +31,10 @@ class Controller:
         try:
             if filename.endswith('.csv'):
                 df = pd.read_csv(filename, header=None, decimal=',', delimiter=';')
+                df[0] = pd.to_numeric(df[0], errors='coerce')
+                df.dropna(inplace=True)
+                print(df.info())
+                print(df.head())
             elif filename.endswith('.xlsx') or filename.endswith('.xls'):
                 df = pd.read_excel(filename, header=None, decimal=',')
             else:
@@ -38,6 +42,7 @@ class Controller:
             data = df.values.flatten().tolist()
             return data
         except Exception as e:
+            
             self.fr.messageAlert("Formato de archivo no compatible.\nProporcione un archivo CSV o Excel.")
 
 
@@ -213,12 +218,11 @@ class Controller:
         self.canvas = FigureCanvasTkAgg(self.fig, master= self.fr.mywindow)
         self.canvas.draw()
         self.canvas.get_tk_widget().pack(side=tk.BOTTOM)
-
         self.fr.mywindow.update()
 
     def drawPokerFigure(self,data, Oi,Ei):
         self.fig.clear()
-        self.fig = plt.figure(figsize=(5, 3), dpi=100)
+        self.fig = plt.figure(figsize=(5, 4), dpi=100)
         ax = self.fig.add_subplot(111)
         tags = ["D","0","T","K","F","P","Q"] # tags for every hand of poker
         ax.set_title("Poker Test")
@@ -228,7 +232,7 @@ class Controller:
         ax.set_xlabel('Categoria')
         ax.set_ylabel('Frecuencia')
         ax.set_title('Frecuencia por Categoria')
-        self.fig.subplots_adjust(bottom=0.39)
+        self.fig.subplots_adjust(bottom=0.15)
         self.canvas.get_tk_widget().pack_forget()
         self.canvas = FigureCanvasTkAgg(self.fig, master= self.fr.mywindow)
         self.canvas.draw()
