@@ -28,19 +28,19 @@ La prueba de varianza es una prueba estadística que se utiliza para verificar l
 
 1. Obtener la varianza. La varianza se calcula con la siguiente fórmula:
 
-    ![alt text](resouce\image-3.png)
+    ![image](https://github.com/Danna-Sanabria/Pseudorandom_Test/assets/83075069/f1345780-fa5c-42c5-b2e9-d0916125b909)
 
     donde n es la cantidad total de números, ri​ es el i-ésimo número y rˉ es la media de los números.
 
 2. Obtener los límites inferior y superior. Estos límites se calculan utilizando la distribución chi-cuadrada y un nivel de confianza predefinido (usualmente 95%). Los límites se calculan como:
     
-    ![alt text](resouce\image-4.png)
+    ![image](https://github.com/Danna-Sanabria/Pseudorandom_Test/assets/83075069/86ce9e2b-99f2-4634-92a0-569cea64726a)
 
     donde 
 
-    ![alt text](resouce\image.png) 
-    ![alt text](resouce\image-1.png) 
-    
+   ![image](https://github.com/Danna-Sanabria/Pseudorandom_Test/assets/83075069/08b211bf-2221-44c6-ae35-fb2291fe33b6)
+   ![image](https://github.com/Danna-Sanabria/Pseudorandom_Test/assets/83075069/2ff9ba80-c85c-4e5e-a01c-5ee8e264a512)
+
     son los valores críticos de la distribución chi-cuadrada para un nivel de confianza de α y n−1 grados de libertad.
 
 3. Comprobar si la varianza se encuentra entre los límites inferior y superior. Si la varianza calculada en el paso 1 se encuentra dentro de los límites calculados en el paso 2, entonces se puede concluir que los números pasan la prueba de varianza. 
@@ -63,8 +63,7 @@ La prueba de Chi cuadrado, permite evaluar si existe una diferencia significativ
 2. Calcular las frecuencias observadas. 
 3. Calcular el estadístico de Chi cuadrado. El estadístico de Chi cuadrado se calcula como la suma de las diferencias al cuadrado entre las frecuencias observadas y las esperadas, divididas por las frecuencias esperadas. En notación matemática, esto se expresa como:
 
-    ![alt text](resouce\image-2.png)
-
+    ![image](https://github.com/Danna-Sanabria/Pseudorandom_Test/assets/83075069/a0e3ccd6-2bff-49c5-a744-d113939f4ca2)
 
     donde Oi​ son las frecuencias observadas y Ei​ son las frecuencias esperadas.
 
