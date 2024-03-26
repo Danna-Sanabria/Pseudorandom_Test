@@ -9,7 +9,7 @@ Esta prueba se basa en la hipótesis de que los números generados siguen una di
 1. Obtener la media. La media (o promedio) de los números se calcula sumando todos los números y dividiendo por la cantidad total de números. En notación matemática, esto se expresa como:
 
 
-    ![alt text](resouce\image-5.png)
+    ![alt text](.\resouce\image-5.png)
 
 
     donde n es la cantidad total de números y ri​ es el i-ésimo número.
