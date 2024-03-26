@@ -77,12 +77,12 @@ Examina en forma individual los dígitos del número pseudoaleatorio generado. A
 2. Clasificar los dígitos. Se clasifican los dígitos en las siguientes categorías: Par, dos pares, tercia, póker, quintilla, full y todos diferentes.
 3. Calcular las frecuencias observadas. Se cuenta el número de veces que cada categoría aparece en los datos.
 4. Calcular las frecuencias esperadas. Se calculan las frecuencias esperadas para cada categoría utilizando las probabilidades teóricas de cada mano de póker, que son las siguientes:
-    Todos diferentes = 0.3024
-    Un par = 0.504
-    Dos pares = 0.108
-    Tercia = 0.072
-    Full = 0.009
-    Quintilla = 0.0001
+    - Todos diferentes = 0.3024
+    - Un par = 0.504
+    - Dos pares = 0.108
+    - Tercia = 0.072
+    - Full = 0.009
+    - Quintilla = 0.0001
 5. Se calcula el estadístico de Chi cuadrado como la suma de las diferencias al cuadrado entre las frecuencias observadas y las esperadas, divididas por las frecuencias esperadas.
 6. Comparar el estadístico de Chi cuadrado con el valor crítico. Si el estadístico de Chi cuadrado es menor que el valor crítico para un nivel de significancia predefinido, entonces se puede concluir que los números pasan la prueba de póker.
 
