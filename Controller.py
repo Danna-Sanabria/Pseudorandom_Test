@@ -26,15 +26,12 @@ class Controller:
         self.fr.mywindow.mainloop()
 
     """It grabs the data from the given file path""" 
-
     def read_data_from_file(self, filename):
         try:
             if filename.endswith('.csv'):
                 df = pd.read_csv(filename, header=None, decimal=',', delimiter=';')
                 df[0] = pd.to_numeric(df[0], errors='coerce')
                 df.dropna(inplace=True)
-                print(df.info())
-                print(df.head())
             elif filename.endswith('.xlsx') or filename.endswith('.xls'):
                 df = pd.read_excel(filename, header=None, decimal=',')
             else:
@@ -176,8 +173,8 @@ class Controller:
 
         bar_width = 0.35 
         index = np.arange(len(self.ks.calcular_probabilidad_esperada()))
-        ax.bar(index - bar_width/2, self.ks.calcular_probabilidad_obtenida(), bar_width, alpha=0.5, color='#22a6b3', label='Frecuencia Observada')
-        ax.bar(index + bar_width/2, self.ks.calcular_probabilidad_esperada(), bar_width, alpha=0.5, color='#be2edd', label='Frecuencia Esperada')
+        ax.bar(index - bar_width/2, self.ks.calcular_probabilidad_obtenida(), bar_width, alpha=0.5, color='#22a6b3', label='Probabilidad Observada')
+        ax.bar(index + bar_width/2, self.ks.calcular_probabilidad_esperada(), bar_width, alpha=0.5, color='#be2edd', label='Probabilidad Esperada')
         
         ax.set_xlabel('Intervalo')
         ax.tick_params(axis='x', rotation=45)

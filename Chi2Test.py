@@ -46,6 +46,14 @@ class Chi2Test:
             [67.328, 70.065, 74.222, 77.929, 82.358, 118.498, 124.342, 129.561, 135.807, 140.169]])
 
     def chi_cuadrado_test(self, data):
+        """Perform the chi-square test for uniformity.
+
+        Args:
+            data (array-like): Sequence of data points.
+
+        Returns: 
+            tuple: A tuple containing the chi-square statistic, critical value, intervals, observed frequencies, and expected frequencies.
+        """
         # Número de intervalos
         k = 8
 
@@ -71,14 +79,6 @@ class Chi2Test:
         # Calculamos el valor crítico de chi-cuadrado con 7 grados de libertad
         self.valor_critico = chi2.ppf(0.95, k-1)
 
-        print(data)
-        print("intervalos: ", intervalos)
-        print("F espe:" , frec_esperada)
-        print("F Obser: ", frec_observada)
-        print("Chi-cuadrado de cada intervalo:")
-        print(chi2_intervalos)
-        print("Chi-cuadrado total:", self.chi2_total)
-        print("Valor crítico:", self.valor_critico)
 
         # Comparamos el chi-cuadrado total con el valor crítico
         if self.chi2_total <= self.valor_critico:
@@ -89,4 +89,9 @@ class Chi2Test:
         return self.chi2_total, self.valor_critico, intervalos, frec_observada, frec_esperada
     
     def validate(self):
+        """Validate if the chi-square statistic is less than or equal to the critical value.
+
+        Returns:
+            bool: True if the condition is satisfied, False otherwise.
+        """
         return self.chi2_total <= self.valor_critico
