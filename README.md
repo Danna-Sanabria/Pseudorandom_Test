@@ -9,18 +9,18 @@ Esta prueba se basa en la hipótesis de que los números generados siguen una di
 1. Obtener la media. La media (o promedio) de los números se calcula sumando todos los números y dividiendo por la cantidad total de números. En notación matemática, esto se expresa como:
 
 
-    ![alt text](.\resouce\image-5.png)
+   ![image](https://github.com/Danna-Sanabria/Pseudorandom_Test/assets/83075069/9bd5608f-f91e-40a8-a944-7235ed264277)
 
 
     donde n es la cantidad total de números y ri​ es el i-ésimo número.
 
-2. Obtener los límites inferior y superior. Estos límites se calculan utilizando la distribución normal estándar y un nivel de confianza predefinido (usualmente 95%). Los límites se calculan como:
+3. Obtener los límites inferior y superior. Estos límites se calculan utilizando la distribución normal estándar y un nivel de confianza predefinido (usualmente 95%). Los límites se calculan como:
 
-    ![alt text](resouce\LILS.png)
+    ![image](https://github.com/Danna-Sanabria/Pseudorandom_Test/assets/83075069/2c790b56-0a97-4d47-87d4-43921ea7ec0d)
 
     donde zα/2​ es el valor crítico de la distribución normal estándar para un nivel de confianza de α.
 
-3. Comprobar si la media se encuentra entre los límites inferior y superior. Si la media calculada en el paso 1 se encuentra dentro de los límites calculados en el paso 2, entonces se puede concluir que los números pasan la prueba de medias.
+4. Comprobar si la media se encuentra entre los límites inferior y superior. Si la media calculada en el paso 1 se encuentra dentro de los límites calculados en el paso 2, entonces se puede concluir que los números pasan la prueba de medias.
 
 ##  Prueba de Varianza
 
@@ -28,19 +28,19 @@ La prueba de varianza es una prueba estadística que se utiliza para verificar l
 
 1. Obtener la varianza. La varianza se calcula con la siguiente fórmula:
 
-    ![alt text](resouce\image-3.png)
+    ![image](https://github.com/Danna-Sanabria/Pseudorandom_Test/assets/83075069/f1345780-fa5c-42c5-b2e9-d0916125b909)
 
     donde n es la cantidad total de números, ri​ es el i-ésimo número y rˉ es la media de los números.
 
 2. Obtener los límites inferior y superior. Estos límites se calculan utilizando la distribución chi-cuadrada y un nivel de confianza predefinido (usualmente 95%). Los límites se calculan como:
     
-    ![alt text](resouce\image-4.png)
+    ![image](https://github.com/Danna-Sanabria/Pseudorandom_Test/assets/83075069/86ce9e2b-99f2-4634-92a0-569cea64726a)
 
     donde 
 
-    ![alt text](resouce\image.png) 
-    ![alt text](resouce\image-1.png) 
-    
+   ![image](https://github.com/Danna-Sanabria/Pseudorandom_Test/assets/83075069/08b211bf-2221-44c6-ae35-fb2291fe33b6)
+   ![image](https://github.com/Danna-Sanabria/Pseudorandom_Test/assets/83075069/2ff9ba80-c85c-4e5e-a01c-5ee8e264a512)
+
     son los valores críticos de la distribución chi-cuadrada para un nivel de confianza de α y n−1 grados de libertad.
 
 3. Comprobar si la varianza se encuentra entre los límites inferior y superior. Si la varianza calculada en el paso 1 se encuentra dentro de los límites calculados en el paso 2, entonces se puede concluir que los números pasan la prueba de varianza. 
@@ -63,8 +63,7 @@ La prueba de Chi cuadrado, permite evaluar si existe una diferencia significativ
 2. Calcular las frecuencias observadas. 
 3. Calcular el estadístico de Chi cuadrado. El estadístico de Chi cuadrado se calcula como la suma de las diferencias al cuadrado entre las frecuencias observadas y las esperadas, divididas por las frecuencias esperadas. En notación matemática, esto se expresa como:
 
-    ![alt text](resouce\image-2.png)
-
+    ![image](https://github.com/Danna-Sanabria/Pseudorandom_Test/assets/83075069/a0e3ccd6-2bff-49c5-a744-d113939f4ca2)
 
     donde Oi​ son las frecuencias observadas y Ei​ son las frecuencias esperadas.
 
@@ -78,12 +77,12 @@ Examina en forma individual los dígitos del número pseudoaleatorio generado. A
 2. Clasificar los dígitos. Se clasifican los dígitos en las siguientes categorías: Par, dos pares, tercia, póker, quintilla, full y todos diferentes.
 3. Calcular las frecuencias observadas. Se cuenta el número de veces que cada categoría aparece en los datos.
 4. Calcular las frecuencias esperadas. Se calculan las frecuencias esperadas para cada categoría utilizando las probabilidades teóricas de cada mano de póker, que son las siguientes:
-    Todos diferentes = 0.3024
-    Un par = 0.504
-    Dos pares = 0.108
-    Tercia = 0.072
-    Full = 0.009
-    Quintilla = 0.0001
+    - Todos diferentes = 0.3024
+    - Un par = 0.504
+    - Dos pares = 0.108
+    - Tercia = 0.072
+    - Full = 0.009
+    - Quintilla = 0.0001
 5. Se calcula el estadístico de Chi cuadrado como la suma de las diferencias al cuadrado entre las frecuencias observadas y las esperadas, divididas por las frecuencias esperadas.
 6. Comparar el estadístico de Chi cuadrado con el valor crítico. Si el estadístico de Chi cuadrado es menor que el valor crítico para un nivel de significancia predefinido, entonces se puede concluir que los números pasan la prueba de póker.
 
